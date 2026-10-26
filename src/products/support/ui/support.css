@@ -1,0 +1,27 @@
+.chat { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-width: 0; }
+.chat__list { display: grid; align-content: start; gap: 12px; padding: 16px; height: clamp(360px, 56vh, 560px); overflow-y: auto; overscroll-behavior: contain; }
+.chat__form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); align-items: flex-end; }
+.chat__form .textarea { flex: 1; resize: none; min-height: 44px; }
+
+.bubble { max-width: min(640px, 92%); padding: 10px 14px; border-radius: 14px; font-size: var(--fs-sm); line-height: 1.55; display: grid; gap: 8px; animation: rise var(--dur-2) var(--ease-out) both; }
+.bubble--user { justify-self: end; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-bottom-right-radius: 4px; }
+.bubble--bot { justify-self: start; background: var(--surface-2); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.bubble--operator { justify-self: start; background: var(--info-soft); border: 1px solid rgb(108 180 255 / 30%); border-bottom-left-radius: 4px; }
+.bubble__who { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: var(--fs-xs); color: var(--text-3); font-weight: 600; }
+.bubble__meta { display: flex; gap: 6px; flex-wrap: wrap; }
+.bubble__actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.sources { display: grid; gap: 4px; border-top: 1px dashed var(--border); padding-top: 8px; }
+.source { display: flex; gap: 8px; align-items: center; width: 100%; padding: 6px 8px; border-radius: var(--r-sm); background: transparent; border: 1px solid transparent; color: var(--text); font: inherit; font-size: var(--fs-xs); text-align: left; cursor: pointer; }
+.source:hover { border-color: var(--border-strong); background: var(--surface-3); }
+.source b { font-weight: 600; }
+
+.howto { font-size: var(--fs-xs); color: var(--text-2); }
+.howto summary { cursor: pointer; color: var(--accent); width: fit-content; }
+.howto p { margin-top: 6px; }
+
+.kb-list { display: grid; gap: 4px; max-height: 520px; overflow-y: auto; }
+.kb-item { display: grid; gap: 2px; width: 100%; text-align: left; padding: 8px 10px; border-radius: var(--r-sm); border: 1px solid transparent; background: transparent; color: var(--text); font: inherit; font-size: var(--fs-sm); cursor: pointer; }
+.kb-item small { color: var(--text-3); font-size: var(--fs-xs); }
+.kb-item:hover { background: var(--surface-2); }
+.kb-item.is-active { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }

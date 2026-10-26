@@ -1,0 +1,135 @@
+/*
+ * NORO design tokens.
+ * Direction: "instrument panel" — graphite surfaces, precise grid, mono details,
+ * one brand signal colour (lime) and a dedicated accent per product.
+ * Product pages set --accent / --accent-ink via [data-product].
+ */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces (warm graphite, not blue-black) */
+  --bg: #0a0b0c;
+  --bg-raise: #0f1112;
+  --surface-1: #131517;
+  --surface-2: #181b1e;
+  --surface-3: #1f2326;
+  --surface-4: #272b2f;
+  --border: #2a2f33;
+  --border-strong: #3a4045;
+  --overlay: rgb(5 6 7 / 72%);
+
+  /* Text */
+  --text: #eef0ee;
+  --text-2: #b4bab6;
+  --text-3: #8b928e;
+  --text-inverse: #0a0b0c;
+
+  /* Brand */
+  --signal: #c9f45f;
+  --signal-ink: #10140a;
+  --signal-soft: rgb(201 244 95 / 12%);
+
+  /* Default accent = brand; overridden per product */
+  --accent: var(--signal);
+  --accent-ink: var(--signal-ink);
+  --accent-soft: var(--signal-soft);
+
+  /* Status (reserved, always paired with icon/label) */
+  --good: #4fd18b;
+  --good-soft: rgb(79 209 139 / 13%);
+  --warning: #f2b84b;
+  --warning-soft: rgb(242 184 75 / 13%);
+  --critical: #ff6b6b;
+  --critical-soft: rgb(255 107 107 / 13%);
+  --info: #6cb4ff;
+  --info-soft: rgb(108 180 255 / 13%);
+
+  /* Categorical chart slots (validated dark steps, fixed order) */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+
+  /* Typography */
+  --font-display: 'Unbounded Variable', 'Onest Variable', system-ui, sans-serif;
+  --font-sans: 'Onest Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --fs-3xl: clamp(1.4rem, 1.1rem + 1.6vw, 2.45rem);
+  --fs-hero: clamp(1.75rem, 1.05rem + 2.9vw, 3.6rem);
+
+  --lh-tight: 1.08;
+  --lh-snug: 1.3;
+  --lh-body: 1.6;
+
+  /* Spacing (4px base) */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+  --sp-24: 6rem;
+  --section-y: clamp(4rem, 3rem + 5vw, 8rem);
+
+  /* Layout */
+  --container: 1240px;
+  --container-wide: 1440px;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+
+  /* Shape */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  /* Depth */
+  --shadow-1: 0 1px 0 rgb(255 255 255 / 3%) inset, 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-2: 0 1px 0 rgb(255 255 255 / 4%) inset, 0 12px 32px -12px rgb(0 0 0 / 70%);
+  --shadow-3: 0 1px 0 rgb(255 255 255 / 5%) inset, 0 30px 80px -30px rgb(0 0 0 / 85%);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--signal);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 420ms;
+  --dur-4: 700ms;
+
+  --header-h: 64px;
+}
+
+/* Product accents */
+[data-product='lead-engine'] { --accent: #f08a4b; --accent-ink: #1a0d05; --accent-soft: rgb(240 138 75 / 13%); }
+[data-product='support'] { --accent: #35c9a8; --accent-ink: #04150f; --accent-soft: rgb(53 201 168 / 13%); }
+[data-product='content-os'] { --accent: #ee7fb0; --accent-ink: #1c0711; --accent-soft: rgb(238 127 176 / 13%); }
+[data-product='docs-intelligence'] { --accent: #6cb4ff; --accent-ink: #04101d; --accent-soft: rgb(108 180 255 / 13%); }
+[data-product='catalog-studio'] { --accent: #f2c14e; --accent-ink: #1a1203; --accent-soft: rgb(242 193 78 / 13%); }
+[data-product='business-intelligence'] { --accent: #a597ff; --accent-ink: #0d0920; --accent-soft: rgb(165 151 255 / 14%); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+  }
+}

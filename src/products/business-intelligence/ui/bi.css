@@ -1,0 +1,8 @@
+.bi-controls { display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center; }
+.bi-range { display: flex; gap: 6px; align-items: center; }
+.bi-range .input { width: auto; }
+.bi-period { font-size: var(--fs-xs); font-family: var(--font-mono); margin-top: -6px; }
+.bi-kpis { grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); }
+.bi-breakdowns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px; }
+.bi-anomaly.is-down { border-left: 3px solid var(--critical); }
+.bi-anomaly.is-up { border-left: 3px solid var(--good); }

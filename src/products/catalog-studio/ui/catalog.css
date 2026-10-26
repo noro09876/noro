@@ -1,0 +1,8 @@
+.issue-card--error .issue-card__count { color: #ff9b9b; }
+.issue-card--warning .issue-card__count { color: #f7d38f; }
+.issue-card--info .issue-card__count { color: var(--text-2); }
+.issue-card small { font-size: 0.7rem; line-height: 1.4; }
+.cs-name { display: block; max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cs-rule.is-off { opacity: 0.55; }
+.cs-rule__body { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; align-items: end; }
+.cs-before { color: var(--text-3); text-decoration: line-through; text-decoration-color: rgb(255 107 107 / 50%); }
