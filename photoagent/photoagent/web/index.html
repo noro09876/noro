@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PhotoAgent</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">PhotoAgent</div>
+  <nav>
+    <button data-view="job" class="nav active">Задание</button>
+    <button data-view="history" class="nav">История</button>
+    <button data-view="review" class="nav">На проверку <span id="reviewCount" class="pill hidden"></span></button>
+    <button data-view="system" class="nav">Модели и система</button>
+  </nav>
+  <div id="worker" class="worker"></div>
+</header>
+
+<main>
+  <!-- ЗАДАНИЕ -->
+  <section id="view-job" class="view">
+    <div class="jobhead">
+      <input id="jobTitle" class="title-input" placeholder="Название задания">
+      <div class="row gap">
+        <button id="newJob" class="ghost">+ Новое задание</button>
+        <button id="deleteJob" class="ghost danger">Удалить задание</button>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="col">
+        <div class="card">
+          <h3>1. Фотографии</h3>
+          <div id="drop" class="drop">
+            <p>Перетащите сюда фотографии, папку или ZIP-архив</p>
+            <div class="row gap center">
+              <label class="btn">Выбрать файлы<input id="pickFiles" type="file" multiple accept=".jpg,.jpeg,.png,.tif,.tiff,.webp,.bmp,.zip" hidden></label>
+              <label class="btn">Выбрать папку<input id="pickFolder" type="file" webkitdirectory directory multiple hidden></label>
+            </div>
+            <div id="uploadStatus" class="muted small"></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>2. Референсы</h3>
+          <p class="muted small">Фон или интерьер для переноса, образец одежды, пример стиля.</p>
+          <div class="row gap wrap">
+            <select id="refRole"></select>
+            <label class="btn">Добавить изображение<input id="pickRef" type="file" accept="image/*" hidden></label>
+          </div>
+          <div id="refs" class="refs"></div>
+        </div>
+        <div class="card">
+          <h3>3. Задание</h3>
+          <textarea id="task" rows="6" placeholder="Например: Удали зелёный фон, аккуратно обработай волосы, помести ребёнка в загруженный интерьер, согласуй освещение и цвета. Сохрани в исходном разрешении."></textarea>
+          <div class="examples small">Примеры:
+            <a href="#" class="ex">Удали фон, сохрани прозрачный PNG</a> ·
+            <a href="#" class="ex">Исправь баланс белого и экспозицию, убери шум</a> ·
+            <a href="#" class="ex">Убери мелкие дефекты кожи, сделай цвет кожи естественным</a> ·
+            <a href="#" class="ex">Удали зелёный фон, убери зелёный ореол, помести в загруженный интерьер, согласуй освещение</a>
+          </div>
+          <details class="export">
+            <summary>Настройки экспорта</summary>
+            <div class="form">
+              <label>Формат <select id="fmt"><option value="auto">Авто (по заданию)</option><option value="jpeg">JPEG</option><option value="png">PNG</option><option value="tiff">TIFF</option><option value="webp">WEBP</option></select></label>
+              <label>Качество JPEG/WEBP <input id="quality" type="number" min="60" max="100" value="95"></label>
+              <label>Разрешение <select id="resolution"><option value="original">Исходное</option><option value="as_processed">Как после обработки</option><option value="long_side">Длинная сторона…</option></select></label>
+              <label id="longSideWrap" class="hidden">Длинная сторона, px <input id="longSide" type="number" min="256" max="20000" value="3000"></label>
+              <label>Глубина цвета <select id="bitDepth"><option value="">Как в исходнике</option><option value="8">8 бит</option><option value="16">16 бит (PNG/TIFF)</option></select></label>
+              <label class="check"><input id="useLlm" type="checkbox"> Дорабатывать непонятые фразы локальной языковой моделью (Ollama)</label>
+            </div>
+          </details>
+          <div class="row gap">
+            <button id="parse" class="primary">Разобрать задание</button>
+            <button id="previewBtn" disabled>Пробный кадр</button>
+          </div>
+          <div id="plan" class="plan"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="row between">
+            <h3>4. Обработка</h3>
+            <div class="row gap">
+              <button id="start" class="primary" disabled>Запустить</button>
+              <button id="pause" disabled>Пауза</button>
+              <button id="resume" disabled>Продолжить</button>
+              <button id="cancel" class="danger" disabled>Отменить</button>
+            </div>
+          </div>
+          <div class="progress"><div id="bar"></div></div>
+          <div id="summary" class="muted small"></div>
+          <div class="row gap wrap filters">
+            <button class="chip active" data-filter="all">Все</button>
+            <button class="chip" data-filter="done">Готово</button>
+            <button class="chip" data-filter="review">На проверку</button>
+            <button class="chip" data-filter="failed">Ошибки</button>
+            <button class="chip" data-filter="pending">В очереди</button>
+          </div>
+          <div id="frames" class="frames"></div>
+          <div class="row gap wrap">
+            <a id="zip" class="btn primary disabled" href="#">Скачать готовые (ZIP)</a>
+            <a id="zipAll" class="btn disabled" href="#">ZIP вместе с «на проверку»</a>
+            <a id="report" class="btn disabled" href="#" target="_blank">Отчёт</a>
+            <button id="reprocessSel" class="ghost" disabled>Повторить выбранные</button>
+          </div>
+          <details>
+            <summary>Журнал</summary>
+            <div id="events" class="events small"></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ИСТОРИЯ -->
+  <section id="view-history" class="view hidden">
+    <div class="card"><h3>История заданий</h3><div id="history"></div></div>
+  </section>
+
+  <!-- НА ПРОВЕРКУ -->
+  <section id="view-review" class="view hidden">
+    <div class="card"><h3>Кадры, требующие проверки</h3>
+      <p class="muted small">Автоматика нашла здесь возможные проблемы или ошибку. Откройте кадр, сравните с оригиналом, затем одобрите или отправьте на повтор.</p>
+      <div id="reviewList" class="frames"></div>
+    </div>
+  </section>
+
+  <!-- СИСТЕМА -->
+  <section id="view-system" class="view hidden">
+    <div class="card"><h3>Модели</h3>
+      <p class="muted small">Модели скачиваются только по вашей кнопке. Скачиваются лишь веса моделей — фотографии никуда не отправляются.</p>
+      <div id="models"></div>
+    </div>
+    <div class="card"><h3>Система</h3><div id="sysinfo"></div></div>
+  </section>
+</main>
+
+<!-- ПРОСМОТР КАДРА -->
+<div id="modal" class="modal hidden">
+  <div class="modal-body">
+    <div class="row between">
+      <h3 id="mTitle"></h3>
+      <button id="mClose" class="ghost">✕</button>
+    </div>
+    <div class="row gap wrap">
+      <button class="chip active" data-mode="side">Рядом</button>
+      <button class="chip" data-mode="slider">Шторка</button>
+    </div>
+    <div id="compare" class="compare side">
+      <figure><img id="imgA" alt="Оригинал"><figcaption>Оригинал</figcaption></figure>
+      <figure><img id="imgB" alt="Результат"><figcaption>Результат</figcaption></figure>
+      <div id="sliderWrap" class="sliderwrap hidden">
+        <img id="sA"><div id="sBclip"><img id="sB"></div>
+        <input id="slider" type="range" min="0" max="100" value="50">
+      </div>
+    </div>
+    <div id="mInfo" class="small"></div>
+    <div class="row gap wrap">
+      <input id="mText" class="grow" placeholder="Другое задание только для этого кадра (необязательно)">
+      <button id="mReprocess">Обработать заново</button>
+      <button id="mApprove" class="primary">Одобрить</button>
+      <a id="mDownload" class="btn" href="#">Скачать</a>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

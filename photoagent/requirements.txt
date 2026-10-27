@@ -1,0 +1,10 @@
+# Основные зависимости PhotoAgent (проверено с указанными версиями)
+numpy>=2.0,<3
+opencv-python-headless>=4.10
+pillow>=11
+fastapi>=0.115
+uvicorn>=0.30
+python-multipart>=0.0.9
+# Нейросети в формате ONNX: на Windows — через DirectML (любая видеокарта DX12, включая RTX 50xx)
+onnxruntime-directml>=1.20; sys_platform == "win32"
+onnxruntime>=1.20; sys_platform != "win32"
