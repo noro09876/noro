@@ -1,0 +1,51 @@
+# docker compose up -d  →  http://localhost:8787
+# Перед запуском: cp .env.example .env и задайте MASTER_KEY, SESSION_SECRET, PUBLIC_URL.
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: noro
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-noro}
+      POSTGRES_DB: noro_factory
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U noro -d noro_factory"]
+      interval: 5s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://noro:${POSTGRES_PASSWORD:-noro}@db:5432/noro_factory
+      HOST: 0.0.0.0
+      PORT: 8787
+      INLINE_WORKER: "0"
+    ports:
+      - "8787:8787"
+    volumes:
+      - media:/app/.data/files
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Отдельный воркер: генерация, рендер, публикации по расписанию, сбор метрик.
+  worker:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://noro:${POSTGRES_PASSWORD:-noro}@db:5432/noro_factory
+    command: ["npx", "tsx", "server/worker-main.ts"]
+    volumes:
+      - media:/app/.data/files
+    depends_on:
+      app:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  media:
