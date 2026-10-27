@@ -229,7 +229,7 @@ npm run check      # типы + линтер + unit-тесты + сборка
 - или `LEAD_WEBHOOK_URL`: адрес вебхука CRM, Make или n8n.
 
 Рекомендуется:
-- `VITE_CONTACT_EMAIL` и/или `VITE_CONTACT_TELEGRAM`: запасные каналы в форме и на странице контактов;
+- `VITE_CONTACT_EMAIL` и `VITE_CONTACT_TELEGRAM`: уже вшиты по умолчанию (9norostudio9@gmail.com, @Noro23); задавать нужно, только если контакты сменятся;
 - `VITE_SITE_URL`: основной домен, если он отличается от адреса Netlify (для canonical и sitemap).
 
 По желанию:

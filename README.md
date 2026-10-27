@@ -58,8 +58,8 @@ npm run test:e2e
 | Переменная | Зачем |
 |---|---|
 | `VITE_SITE_URL` | Канонические адреса и sitemap. На Netlify можно не задавать — берётся `URL` |
-| `VITE_CONTACT_EMAIL` | Почта для связи, показывается в форме заявки как запасной канал |
-| `VITE_CONTACT_TELEGRAM` | Telegram без `@`, тоже запасной канал |
+| `VITE_CONTACT_EMAIL` | Почта для связи (по умолчанию `9norostudio9@gmail.com`), показывается в подвале и в форме заявки как запасной канал |
+| `VITE_CONTACT_TELEGRAM` | Telegram без `@` (по умолчанию `Noro23`), тоже запасной канал |
 
 Серверные (только для Netlify Functions, в браузер не попадают):
 

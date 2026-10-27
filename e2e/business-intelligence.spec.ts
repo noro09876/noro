@@ -56,6 +56,7 @@ test('BI: own CSV with a date and amount works; a file without dates explains wh
 
   await page.getByRole('button', { name: 'Сбросить данные' }).click();
   await page.getByRole('dialog').getByRole('button', { name: /Удалить|Сбросить/ }).click();
+  await expect(page.getByTestId('demo-button')).toBeVisible();
   await page.locator('input[type=file]').first().setInputFiles({ name: 'nodates.csv', mimeType: 'text/csv', buffer: Buffer.from('Имя;Город\nА;Москва\nБ;Казань\n') });
   await expect(page.locator('[role="status"], [role="alert"], [role="dialog"]').filter({ hasText: /дат/i }).first()).toBeVisible();
 });
