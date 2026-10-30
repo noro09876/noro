@@ -1,0 +1,28 @@
+# docker compose up -d            — только NORO (Ollama уже установлена на компьютере)
+# docker compose --profile ollama up -d — NORO + Ollama в контейнере
+services:
+  noro:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8787:8787"   # доступ только с этого компьютера
+    volumes:
+      - ./data:/data
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      NORO_HOST: 0.0.0.0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # Ollama на хосте: http://host.docker.internal:11434
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    restart: unless-stopped
+    volumes:
+      - ollama:/root/.ollama
+    # В NORO укажите адрес http://ollama:11434
+
+volumes:
+  ollama:
