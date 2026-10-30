@@ -1,7 +1,7 @@
 import type { Db, Row } from './db.ts';
 import { json, now, parse } from './db.ts';
 import { mask, type Vault } from './crypto.ts';
-import type { EventLog } from './log.ts';
+import { redact, type EventLog } from './log.ts';
 import type { AppConfig } from './config.ts';
 import type { Platform } from './settings.ts';
 import { INTEGRATIONS } from './integrations/index.ts';
@@ -148,7 +148,7 @@ export class Accounts {
   }
 
   setStatus(id: number, status: AccountStatus, error: string | null, remoteName?: string | null) {
-    const values: Record<string, string | null> = { status, last_error: error, last_check_at: now(), updated_at: now() };
+    const values: Record<string, string | null> = { status, last_error: error === null ? null : (redact(error) as string), last_check_at: now(), updated_at: now() };
     if (remoteName !== undefined) values.remote_name = remoteName;
     this.db.update('accounts', id, values);
   }

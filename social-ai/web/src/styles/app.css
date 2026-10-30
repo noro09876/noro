@@ -316,3 +316,7 @@ table.table { width: 100%; border-collapse: collapse; }
 @media (max-width: 860px) { .btn.menu-btn { display: inline-flex; } }
 .badge.wrap { white-space: normal; height: auto; padding: 5px 10px; line-height: 1.4; border-radius: 8px; }
 .stack > *, .stack-lg > * { min-width: 0; }
+.seg { max-width: 100%; overflow-x: auto; }
+.seg button { flex: none; }
+.page { grid-template-columns: minmax(0, 1fr); }
+.page > * { min-width: 0; }

@@ -19,9 +19,8 @@ export function checkText(text: string, bannedWords: string[] = []): TextIssue[]
   const t = text ?? '';
   if (!t.trim()) return [{ level: 'error', message: 'Пустой текст' }];
   if (PLACEHOLDERS.test(t)) issues.push({ level: 'error', message: 'В тексте остался шаблон-заглушка (TODO, [вставьте…], {{…}} и т. п.)' });
-  const mixed = t.match(/\b(?=\p{L}*[а-яё])(?=\p{L}*[a-z])\p{L}+\b/giu);
-  const realMixed = (mixed ?? []).filter((w) => /[а-яё][a-z]|[a-z][а-яё]/i.test(w));
-  if (realMixed.length) issues.push({ level: 'error', message: `Смешение латиницы и кириллицы в словах: ${realMixed.slice(0, 3).join(', ')}` });
+  const mixed = t.split(/[^\p{L}]+/u).filter((w) => /[а-яё]/i.test(w) && /[a-z]/i.test(w));
+  if (mixed.length) issues.push({ level: 'error', message: `Смешение латиницы и кириллицы в словах: ${mixed.slice(0, 3).join(', ')}` });
   const repeated = t.match(/(?<![\p{L}\p{N}])(\p{L}{2,})\s+\1(?![\p{L}\p{N}])/giu);
   if (repeated) issues.push({ level: 'warning', message: `Повтор слова подряд: «${repeated[0]}»` });
   if (/[!?.,]{4,}|,,|\.\.(?!\.)/.test(t)) issues.push({ level: 'warning', message: 'Подозрительная пунктуация (повторы знаков)' });

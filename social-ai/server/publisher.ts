@@ -1,6 +1,6 @@
 import type { Db, Row } from './db.ts';
 import { now } from './db.ts';
-import type { EventLog } from './log.ts';
+import { redact, type EventLog } from './log.ts';
 import type { Accounts } from './accounts.ts';
 import { statusForError } from './accounts.ts';
 import type { ContentRepo, Media } from './content.ts';
@@ -196,6 +196,7 @@ export class Publisher {
   }
 
   private finish(id: number, values: Record<string, string | number | null>) {
+    if (typeof values.last_error === 'string') values.last_error = redact(values.last_error) as string;
     this.db.update('publications', id, { ...values, locked_until: null, updated_at: now() });
   }
 

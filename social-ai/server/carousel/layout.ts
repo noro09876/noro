@@ -31,7 +31,7 @@ export function measure(text: string, key: FontKey, size: number): number {
 
 /** Russian typography: short prepositions and conjunctions must not hang at the end of a line. */
 export function glueShortWords(text: string): string {
-  return text.replace(/(^|[\s(«"])([вкосуиаВКОСУИА]|за|на|не|по|до|от|из|со|во|ко|об|но|же|ли|для|при|без|Не|На|За|По|До|От|Из|Для|При|Без)[ \t]+/g, '$1$2\u00a0');
+  return text.replace(/(^|[\s(«"])([вкосуиаВКОСУИА]|за|на|не|по|до|от|из|со|во|ко|об|но|для|при|без|Не|На|За|По|До|От|Из|Для|При|Без)[ \t]+/g, '$1$2\u00a0').replace(/[ \t]+(ли|же|бы)(?=[\s,.!?:;]|$)/g, '\u00a0$1');
 }
 
 /** Greedy word wrap. Words wider than the line are split by characters with a hyphen. */
