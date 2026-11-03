@@ -1,0 +1,275 @@
+{
+  "$schema": "../spec/motion-style.schema.json",
+  "id": "punch_poster",
+  "name": "Плакатный: удары в бит, плашки с тенью, толчки камеры",
+  "source": {
+    "reference": null,
+    "analyzed": "Авторский стиль NORO (демо). Не разбор чужого ролика.",
+    "confidence": {
+      "typography": 1,
+      "text_animation": 1,
+      "transitions": 1,
+      "rhythm": 1
+    },
+    "notes": "Громкий стиль: слова садятся на восьмые доли, склейки на каждую долю, после дропа камера толкается на бочку. Чтобы не выглядеть шаблоном — пропуски долей, разный наклон штампов, прямые склейки вперемешку с эффектными."
+  },
+  "canvas": {
+    "safe": {
+      "top": 0.11,
+      "bottom": 0.2,
+      "left": 0.065,
+      "right": 0.14
+    }
+  },
+  "palette": {
+    "base": "#0E0E0E",
+    "ink": "#FFFFFF",
+    "accent": "#FF5A1F",
+    "accent_ink": "#0E0E0E",
+    "plate": "#FFFFFF",
+    "plate_ink": "#0E0E0E",
+    "shadow": "#FF5A1F",
+    "flash": "#FFFFFF"
+  },
+  "typography": {
+    "roles": {
+      "hook": {
+        "family": "Unbounded Variable",
+        "weight": 800,
+        "size": 0.047,
+        "case": "upper",
+        "tracking": -0.02,
+        "leading": 1.0,
+        "max_chars_per_line": 10,
+        "align": "center",
+        "color": "plate_ink"
+      },
+      "body": {
+        "family": "Unbounded Variable",
+        "weight": 760,
+        "size": 0.044,
+        "case": "upper",
+        "tracking": -0.015,
+        "leading": 1.04,
+        "max_chars_per_line": 12,
+        "align": "center",
+        "color": "ink"
+      },
+      "end": {
+        "family": "Unbounded Variable",
+        "weight": 900,
+        "size": 0.05,
+        "case": "upper",
+        "tracking": -0.03,
+        "leading": 0.98,
+        "max_chars_per_line": 11,
+        "align": "center",
+        "color": "plate_ink"
+      }
+    },
+    "shadow": {
+      "blur": 24,
+      "opacity": 0.55
+    }
+  },
+  "layout": {
+    "positions": [
+      {
+        "id": "center_mid",
+        "x": 0.465,
+        "y": 0.4,
+        "weight": 3
+      },
+      {
+        "id": "center_low",
+        "x": 0.465,
+        "y": 0.55,
+        "weight": 2
+      },
+      {
+        "id": "center_high",
+        "x": 0.465,
+        "y": 0.24,
+        "roles": [
+          "body"
+        ],
+        "weight": 1
+      }
+    ],
+    "no_repeat_position": true,
+    "box_width": 0.82
+  },
+  "rhythm": {
+    "cut_on": "beat",
+    "cut_lead_frames": 0,
+    "min_shot_sec": 1.2,
+    "text_snap": {
+      "to": "beat",
+      "window_ms": 160
+    },
+    "word_stagger": "beat_subdivision",
+    "subdivision": 2,
+    "hold_after_last_word_frames": 4,
+    "exit_on": "beat_before_next"
+  },
+  "text": {
+    "enter": [
+      {
+        "technique": "slam_word",
+        "weight": 3,
+        "params": {
+          "from_scale": 1.4
+        }
+      },
+      {
+        "technique": "hard_on",
+        "weight": 1
+      }
+    ],
+    "exit": [
+      {
+        "technique": "cut_off",
+        "weight": 1
+      }
+    ],
+    "plate": [
+      {
+        "technique": "plate_hard_shadow",
+        "params": {
+          "shadow": 0.12,
+          "pad_x": 0.35
+        }
+      }
+    ],
+    "plate_roles": [
+      "hook",
+      "end"
+    ],
+    "by_role": {
+      "end": {
+        "enter": [
+          {
+            "technique": "stamp",
+            "params": {
+              "angle": -3
+            }
+          }
+        ]
+      }
+    }
+  },
+  "emphasis": {
+    "keyword": [
+      {
+        "technique": "color_flip",
+        "params": {
+          "pop": 1.08
+        }
+      }
+    ],
+    "number": [
+      {
+        "technique": "counter_roll"
+      }
+    ],
+    "budget_per_10s": 5,
+    "delay_frames": [
+      0,
+      0
+    ]
+  },
+  "transitions": {
+    "default": [
+      {
+        "technique": "zoom_punch_cut",
+        "weight": 3,
+        "params": {
+          "from": 1.2
+        }
+      },
+      {
+        "technique": "hard_cut",
+        "weight": 2
+      },
+      {
+        "technique": "whip_pan",
+        "weight": 1
+      }
+    ],
+    "on_drop": [
+      {
+        "technique": "zoom_punch_cut",
+        "params": {
+          "from": 1.3
+        }
+      }
+    ],
+    "on_section": [
+      {
+        "technique": "whip_pan",
+        "params": {
+          "dist": 40,
+          "blur": 55
+        }
+      }
+    ],
+    "no_repeat": true
+  },
+  "camera": {
+    "base": {
+      "technique": "drift",
+      "params": {
+        "amount": 1.02
+      }
+    },
+    "on_onset_low": {
+      "pick": {
+        "technique": "punch_in",
+        "params": {
+          "amount": 1.06
+        }
+      },
+      "min_strength": 0.45,
+      "max_per_bar": 2,
+      "after_drop_only": true,
+      "skip_probability": 0.3
+    },
+    "on_hit": {
+      "technique": "micro_shake",
+      "params": {
+        "amp": 0.9
+      }
+    }
+  },
+  "overlays": {
+    "on_drop": {
+      "technique": "flash_frame",
+      "params": {
+        "peak": 0.9
+      },
+      "color": "flash"
+    }
+  },
+  "finish": {
+    "grain": 0.09,
+    "vignette": 0.12,
+    "dim_footage": 0.62,
+    "footage_blur": 2
+  },
+  "humanize": {
+    "seed": 23,
+    "timing_jitter_frames": [
+      -1,
+      1
+    ],
+    "param_jitter": 0.1,
+    "rotation_jitter_deg": 0.8,
+    "position_jitter": 0.008,
+    "max_same_enter_streak": 3
+  },
+  "bans": [
+    "blur_resolve_line",
+    "char_cascade",
+    "mask_wipe_y"
+  ]
+}

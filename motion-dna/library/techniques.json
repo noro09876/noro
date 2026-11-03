@@ -1,0 +1,1499 @@
+{
+  "version": "0.1.0",
+  "conventions": {
+    "time": "dur — длительность в кадрах при 30 fps (компилятор пересчитывает под fps ролика). keys — [t, value], t от 0 до 1 внутри dur.",
+    "hit": "Доля dur (0..1), которая ставится ровно на аудио-якорь (бит, онсет, начало слова). 0 — приём начинается на якоре, 0.3 — удар происходит на 30% длительности.",
+    "units": "Единица анимации: char | word | line | block (вся фраза) | layer (клип/кадр целиком).",
+    "props": {
+      "opacity": "0..1",
+      "x, y": "для текста — в em (доля кегля), для слоя (layer) — в % кадра",
+      "scale, scaleX, scaleY": "множитель, точка опоры — origin",
+      "rotate, skewX": "градусы",
+      "blur": "px при ширине кадра 1080",
+      "clipT, clipR, clipB, clipL": "маска-врезка с каждой стороны, % размера элемента (100 — полностью скрыто)",
+      "tracking": "добавка к межбуквенному интервалу стиля, em (0 — интервал из типографики)",
+      "count": "для счётчиков: доля итогового числа 0..1"
+    },
+    "params": "Значение ключа может быть числом или строкой \"$имя\" / \"-$имя\" — подставляется параметр приёма из стиля.",
+    "ai_tell": "Насколько приём сам по себе выдаёт шаблон/нейросеть: low | medium | high. high разрешён только с явным разрешением в стиле.",
+    "mask": "mask: true — единица анимации помещается в контейнер с обрезкой по своим границам (с запасом 0.15 em под выносные элементы); движение по y происходит внутри него — классическая «маска» из AE.",
+    "draw": "draw — что рисует приём акцента/плашки: rect_behind (плашка за словом), line_under, recolor, count, rect_outline, plate.",
+    "modes": "Окна применения: приём входа держит первый ключ до старта и последний после конца; выход и перекраска — без эффекта до старта, держат последний ключ после; камера и переходы действуют только внутри своего окна."
+  },
+  "easings": {
+    "linear": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "out-expo": [
+      0.16,
+      1,
+      0.3,
+      1
+    ],
+    "out-quart": [
+      0.25,
+      1,
+      0.5,
+      1
+    ],
+    "out-cubic": [
+      0.33,
+      1,
+      0.68,
+      1
+    ],
+    "in-quart": [
+      0.5,
+      0,
+      0.75,
+      0
+    ],
+    "in-out-quart": [
+      0.76,
+      0,
+      0.24,
+      1
+    ],
+    "in-out-sine": [
+      0.37,
+      0,
+      0.63,
+      1
+    ],
+    "out-back-soft": [
+      0.34,
+      1.3,
+      0.64,
+      1
+    ],
+    "step": "hold"
+  },
+  "techniques": [
+    {
+      "id": "mask_rise_line",
+      "category": "text_enter",
+      "name": "Выезд строки из-под маски",
+      "description": "Строка поднимается снизу, нижний край обрезан невидимой линией. Классика редакционного моушна.",
+      "unit": "line",
+      "dur": 12,
+      "hit": 0.15,
+      "stagger": {
+        "frames": 3,
+        "order": "forward"
+      },
+      "params": {
+        "rise": {
+          "type": "number",
+          "min": 0.6,
+          "max": 1.2,
+          "default": 1.0,
+          "unit": "em"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              "$rise"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-expo"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low",
+      "mask": true
+    },
+    {
+      "id": "mask_rise_word",
+      "category": "text_enter",
+      "name": "Выезд слова из-под маски",
+      "description": "То же, что mask_rise_line, но по словам — каждое слово выходит в момент, когда его произносят.",
+      "unit": "word",
+      "dur": 10,
+      "hit": 0.15,
+      "stagger": {
+        "frames": "speech",
+        "order": "forward"
+      },
+      "params": {
+        "rise": {
+          "type": "number",
+          "min": 0.5,
+          "max": 1.1,
+          "default": 0.9,
+          "unit": "em"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              "$rise"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-expo"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low",
+      "mask": true
+    },
+    {
+      "id": "slam_word",
+      "category": "text_enter",
+      "name": "Удар слова",
+      "description": "Слово влетает с увеличением и размытием, удар (момент совпадения масштаба 1) — на бит.",
+      "unit": "word",
+      "dur": 7,
+      "hit": 0.4,
+      "stagger": {
+        "frames": "beat_subdivision",
+        "order": "forward"
+      },
+      "params": {
+        "from_scale": {
+          "type": "number",
+          "min": 1.15,
+          "max": 1.6,
+          "default": 1.35
+        },
+        "settle": {
+          "type": "number",
+          "min": 0.94,
+          "max": 1.0,
+          "default": 0.97
+        }
+      },
+      "tracks": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              "$from_scale"
+            ],
+            [
+              0.4,
+              "$settle"
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.2,
+              1
+            ]
+          ],
+          "ease": "linear"
+        },
+        {
+          "prop": "blur",
+          "keys": [
+            [
+              0,
+              14
+            ],
+            [
+              0.4,
+              0
+            ]
+          ],
+          "ease": "out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "medium",
+      "note": "Без ритмической вариации превращается в «капкат-шаблон». Обязателен humanize и пропуски битов."
+    },
+    {
+      "id": "hard_on",
+      "category": "text_enter",
+      "name": "Жёсткое появление",
+      "description": "Текст появляется в один кадр, без анимации. Самый «человеческий» приём: монтажёр так делает, когда текст должен попасть ровно в звук.",
+      "unit": "block",
+      "dur": 1,
+      "hit": 0,
+      "params": {},
+      "tracks": [
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "step"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "skew_slide_word",
+      "category": "text_enter",
+      "name": "Скос-выезд",
+      "description": "Слово въезжает сбоку со скосом, скос гаснет к остановке — ощущение инерции.",
+      "unit": "word",
+      "dur": 9,
+      "hit": 0.25,
+      "stagger": {
+        "frames": 2,
+        "order": "forward"
+      },
+      "params": {
+        "dist": {
+          "type": "number",
+          "min": 0.3,
+          "max": 1.2,
+          "default": 0.6,
+          "unit": "em"
+        },
+        "skew": {
+          "type": "number",
+          "min": 6,
+          "max": 18,
+          "default": 12
+        }
+      },
+      "tracks": [
+        {
+          "prop": "x",
+          "keys": [
+            [
+              0,
+              "-$dist"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-expo"
+        },
+        {
+          "prop": "skewX",
+          "keys": [
+            [
+              0,
+              "-$skew"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-cubic"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.3,
+              1
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "tracking_collapse",
+      "category": "text_enter",
+      "name": "Схлопывание трекинга",
+      "description": "Буквы стягиваются из разрежённого набора в плотный. Для заголовков и финальных карточек.",
+      "unit": "line",
+      "dur": 18,
+      "hit": 0.0,
+      "params": {
+        "from": {
+          "type": "number",
+          "min": 0.15,
+          "max": 0.6,
+          "default": 0.35,
+          "unit": "em"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "tracking",
+          "keys": [
+            [
+              0,
+              "$from"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-expo"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.35,
+              1
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "audio": {
+        "anchor": "downbeat"
+      },
+      "ai_tell": "medium"
+    },
+    {
+      "id": "char_cascade",
+      "category": "text_enter",
+      "name": "Каскад букв",
+      "description": "Буквы поднимаются по одной с шагом 1 кадр. Только для коротких слов (≤8 букв), иначе — шаблон.",
+      "unit": "char",
+      "dur": 8,
+      "hit": 0.2,
+      "stagger": {
+        "frames": 1,
+        "order": "forward"
+      },
+      "params": {
+        "rise": {
+          "type": "number",
+          "min": 0.2,
+          "max": 0.7,
+          "default": 0.45,
+          "unit": "em"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              "$rise"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.5,
+              1
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "high",
+      "note": "Узнаваемый пресет. Разрешать только на одном слове за ролик."
+    },
+    {
+      "id": "blur_resolve_line",
+      "category": "text_enter",
+      "name": "Проявление из расфокуса",
+      "description": "Строка проявляется из размытия с лёгким уменьшением.",
+      "unit": "line",
+      "dur": 14,
+      "hit": 0.3,
+      "params": {
+        "blur": {
+          "type": "number",
+          "min": 6,
+          "max": 24,
+          "default": 14
+        }
+      },
+      "tracks": [
+        {
+          "prop": "blur",
+          "keys": [
+            [
+              0,
+              "$blur"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-cubic"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.6,
+              1
+            ]
+          ],
+          "ease": "linear"
+        },
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              1.04
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-cubic"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "high",
+      "note": "Главный маркер «ИИ-видео» 2024–2026. В стилях по умолчанию запрещён."
+    },
+    {
+      "id": "stamp",
+      "category": "text_enter",
+      "name": "Штамп",
+      "description": "Блок падает с поворотом и останавливается чуть наклонённым — как наклейка.",
+      "unit": "block",
+      "dur": 6,
+      "hit": 0.5,
+      "params": {
+        "angle": {
+          "type": "number",
+          "min": -6,
+          "max": 6,
+          "default": -3,
+          "unit": "deg"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              1.25
+            ],
+            [
+              0.5,
+              0.98
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "rotate",
+          "keys": [
+            [
+              0,
+              -9
+            ],
+            [
+              1,
+              "$angle"
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.2,
+              1
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "audio": {
+        "anchor": "onset_low"
+      },
+      "ai_tell": "medium"
+    },
+    {
+      "id": "cut_off",
+      "category": "text_exit",
+      "name": "Обрыв",
+      "description": "Текст исчезает в один кадр — обычно на склейке или бите.",
+      "unit": "block",
+      "dur": 1,
+      "hit": 0,
+      "params": {},
+      "tracks": [
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "step"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "mask_drop_line",
+      "category": "text_exit",
+      "name": "Уход под маску",
+      "description": "Строка уезжает вверх и срезается маской. Зеркало mask_rise_line.",
+      "unit": "line",
+      "dur": 8,
+      "hit": 1,
+      "stagger": {
+        "frames": 2,
+        "order": "forward"
+      },
+      "params": {
+        "rise": {
+          "type": "number",
+          "min": 0.6,
+          "max": 1.2,
+          "default": 1.0,
+          "unit": "em"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              "-$rise"
+            ]
+          ],
+          "ease": "in-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low",
+      "mask": true
+    },
+    {
+      "id": "slide_out_x",
+      "category": "text_exit",
+      "name": "Сброс вбок",
+      "description": "Текст коротко уезжает вбок с затуханием.",
+      "unit": "word",
+      "dur": 6,
+      "hit": 1,
+      "stagger": {
+        "frames": 1,
+        "order": "reverse"
+      },
+      "params": {
+        "dist": {
+          "type": "number",
+          "min": 0.4,
+          "max": 1.5,
+          "default": 0.8,
+          "unit": "em"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "x",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              "$dist"
+            ]
+          ],
+          "ease": "in-quart"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "in-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "marker_sweep",
+      "category": "emphasis",
+      "name": "Маркер",
+      "description": "Плашка цвета акцента протягивается за словом слева направо, как маркер по бумаге. Высота и смещение неидеальны.",
+      "unit": "word",
+      "dur": 9,
+      "hit": 0.0,
+      "origin": "left center",
+      "params": {
+        "height": {
+          "type": "number",
+          "min": 0.45,
+          "max": 1.05,
+          "default": 0.62,
+          "unit": "em"
+        },
+        "offset_y": {
+          "type": "number",
+          "min": 0.0,
+          "max": 0.3,
+          "default": 0.12,
+          "unit": "em"
+        },
+        "tilt": {
+          "type": "number",
+          "min": -2.5,
+          "max": 2.5,
+          "default": -1.2,
+          "unit": "deg"
+        }
+      },
+      "draw": "rect_behind",
+      "tracks": [
+        {
+          "prop": "scaleX",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "underline_draw",
+      "category": "emphasis",
+      "name": "Подчёркивание",
+      "description": "Линия под словом прорисовывается слева направо.",
+      "unit": "word",
+      "dur": 8,
+      "hit": 0.0,
+      "origin": "left center",
+      "params": {
+        "thickness": {
+          "type": "number",
+          "min": 0.04,
+          "max": 0.14,
+          "default": 0.08,
+          "unit": "em"
+        }
+      },
+      "draw": "line_under",
+      "tracks": [
+        {
+          "prop": "scaleX",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "in-out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "color_flip",
+      "category": "emphasis",
+      "name": "Перекраска на удар",
+      "description": "Слово мгновенно меняет цвет на акцентный и коротко «подпрыгивает».",
+      "unit": "word",
+      "dur": 6,
+      "hit": 0.0,
+      "params": {
+        "pop": {
+          "type": "number",
+          "min": 1.0,
+          "max": 1.15,
+          "default": 1.07
+        }
+      },
+      "draw": "recolor",
+      "tracks": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              "$pop"
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "accent",
+          "keys": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "step"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "counter_roll",
+      "category": "emphasis",
+      "name": "Счётчик",
+      "description": "Число считает от 0 (или from) до значения. Замедление в конце; последняя цифра встаёт на бит.",
+      "unit": "word",
+      "dur": 16,
+      "hit": 1,
+      "params": {
+        "from": {
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "default": 0,
+          "unit": "доля значения"
+        }
+      },
+      "draw": "count",
+      "tracks": [
+        {
+          "prop": "count",
+          "keys": [
+            [
+              0,
+              "$from"
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-expo"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "box_outline",
+      "category": "emphasis",
+      "name": "Рамка вокруг слова",
+      "description": "Тонкая рамка проявляется маской сверху вниз.",
+      "unit": "word",
+      "dur": 8,
+      "hit": 0,
+      "params": {
+        "pad": {
+          "type": "number",
+          "min": 0.08,
+          "max": 0.3,
+          "default": 0.15,
+          "unit": "em"
+        }
+      },
+      "draw": "rect_outline",
+      "tracks": [
+        {
+          "prop": "clipB",
+          "keys": [
+            [
+              0,
+              100
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "plate_wipe_x",
+      "category": "plate",
+      "name": "Плашка-шторка",
+      "description": "Плоская плашка вытягивается слева направо, текст выходит на 3 кадра позже. Плашка на каждую строку.",
+      "unit": "line",
+      "dur": 8,
+      "hit": 0,
+      "origin": "left center",
+      "stagger": {
+        "frames": 2,
+        "order": "forward"
+      },
+      "params": {
+        "pad_x": {
+          "type": "number",
+          "min": 0.15,
+          "max": 0.6,
+          "default": 0.3,
+          "unit": "em"
+        },
+        "radius": {
+          "type": "number",
+          "min": 0,
+          "max": 0.3,
+          "default": 0.06,
+          "unit": "em"
+        }
+      },
+      "draw": "plate",
+      "tracks": [
+        {
+          "prop": "scaleX",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-expo"
+        }
+      ],
+      "text_delay": 3,
+      "audio": {
+        "anchor": "word"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "plate_hard_shadow",
+      "category": "plate",
+      "name": "Плашка с жёсткой тенью",
+      "description": "Плашка с плоской смещённой тенью, появляется ударом за 2 кадра. Блок целиком.",
+      "unit": "block",
+      "dur": 5,
+      "hit": 0.4,
+      "params": {
+        "shadow": {
+          "type": "number",
+          "min": 0.05,
+          "max": 0.2,
+          "default": 0.1,
+          "unit": "em"
+        },
+        "pad_x": {
+          "type": "number",
+          "min": 0.2,
+          "max": 0.6,
+          "default": 0.35,
+          "unit": "em"
+        }
+      },
+      "draw": "plate",
+      "tracks": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              1.12
+            ],
+            [
+              0.4,
+              0.99
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.15,
+              1
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "text_delay": 0,
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "hard_cut",
+      "category": "transition",
+      "name": "Прямая склейка",
+      "description": "Без перехода. Должна составлять большинство склеек в живом монтаже.",
+      "unit": "layer",
+      "dur": 1,
+      "hit": 0,
+      "params": {},
+      "a": [],
+      "b": [],
+      "audio": {
+        "anchor": "downbeat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "whip_pan",
+      "category": "transition",
+      "name": "Хлыст",
+      "description": "Кадр A срывается вбок с размытием, B влетает с той же стороны. Удар — на середине.",
+      "unit": "layer",
+      "dur": 8,
+      "hit": 0.5,
+      "params": {
+        "dist": {
+          "type": "number",
+          "min": 20,
+          "max": 60,
+          "default": 35,
+          "unit": "%"
+        },
+        "blur": {
+          "type": "number",
+          "min": 20,
+          "max": 70,
+          "default": 45
+        }
+      },
+      "a": [
+        {
+          "prop": "x",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.5,
+              "-$dist"
+            ]
+          ],
+          "ease": "in-quart"
+        },
+        {
+          "prop": "blur",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.5,
+              "$blur"
+            ]
+          ],
+          "ease": "in-quart"
+        }
+      ],
+      "b": [
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.5,
+              1
+            ]
+          ],
+          "ease": "step"
+        },
+        {
+          "prop": "x",
+          "keys": [
+            [
+              0.5,
+              "$dist"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-quart"
+        },
+        {
+          "prop": "blur",
+          "keys": [
+            [
+              0.5,
+              "$blur"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "medium",
+      "note": "Не чаще одного раза на 3–4 склейки, никогда два подряд."
+    },
+    {
+      "id": "zoom_punch_cut",
+      "category": "transition",
+      "name": "Склейка с откатом зума",
+      "description": "Прямая склейка, новый кадр стартует увеличенным и за 6 кадров откатывается. Читается как удар.",
+      "unit": "layer",
+      "dur": 7,
+      "hit": 0,
+      "params": {
+        "from": {
+          "type": "number",
+          "min": 1.08,
+          "max": 1.35,
+          "default": 1.18
+        }
+      },
+      "a": [],
+      "b": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              "$from"
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-expo"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "mask_wipe_y",
+      "category": "transition",
+      "name": "Шторка вверх",
+      "description": "Новый кадр поднимается маской снизу, старый чуть уходит вверх (параллакс).",
+      "unit": "layer",
+      "dur": 10,
+      "hit": 0.6,
+      "params": {},
+      "a": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              -6
+            ]
+          ],
+          "ease": "in-out-quart"
+        }
+      ],
+      "b": [
+        {
+          "prop": "clipT",
+          "keys": [
+            [
+              0,
+              100
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "in-out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "beat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "slide_push",
+      "category": "transition",
+      "name": "Сдвиг кадром",
+      "description": "Новый кадр выталкивает старый вверх. Для смены смысловой части.",
+      "unit": "layer",
+      "dur": 9,
+      "hit": 0.7,
+      "params": {},
+      "a": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              -100
+            ]
+          ],
+          "ease": "in-out-quart"
+        }
+      ],
+      "b": [
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              100
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "in-out-quart"
+        }
+      ],
+      "audio": {
+        "anchor": "downbeat"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "flash_frame",
+      "category": "overlay",
+      "name": "Вспышка",
+      "description": "Один-два кадра заливки (белый или акцент) на ударе. Для дропа, не чаще раза за ролик.",
+      "unit": "layer",
+      "dur": 4,
+      "hit": 0.25,
+      "params": {
+        "peak": {
+          "type": "number",
+          "min": 0.4,
+          "max": 1.0,
+          "default": 0.85
+        }
+      },
+      "tracks": [
+        {
+          "prop": "opacity",
+          "keys": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              "$peak"
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "out-cubic"
+        }
+      ],
+      "audio": {
+        "anchor": "drop"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "punch_in",
+      "category": "camera",
+      "name": "Толчок камеры",
+      "description": "Кадр мгновенно увеличивается на ударе и мягко отпускает до промежуточного значения.",
+      "unit": "layer",
+      "dur": 10,
+      "hit": 0,
+      "params": {
+        "amount": {
+          "type": "number",
+          "min": 1.02,
+          "max": 1.12,
+          "default": 1.05
+        }
+      },
+      "tracks": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              "$amount"
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "ease": "out-cubic"
+        }
+      ],
+      "audio": {
+        "anchor": "onset_low"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "drift",
+      "category": "camera",
+      "name": "Медленный наезд",
+      "description": "Постоянный лёгкий наезд на протяжении кадра, чтобы статика не выглядела стоп-кадром.",
+      "unit": "layer",
+      "dur": "shot",
+      "hit": 0,
+      "params": {
+        "amount": {
+          "type": "number",
+          "min": 1.01,
+          "max": 1.06,
+          "default": 1.03
+        }
+      },
+      "tracks": [
+        {
+          "prop": "scale",
+          "keys": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              "$amount"
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "audio": {
+        "anchor": "none"
+      },
+      "ai_tell": "low"
+    },
+    {
+      "id": "micro_shake",
+      "category": "camera",
+      "name": "Микротряска",
+      "description": "3–4 кадра нерегулярного смещения на сильном ударе. Амплитуда затухает.",
+      "unit": "layer",
+      "dur": 5,
+      "hit": 0,
+      "params": {
+        "amp": {
+          "type": "number",
+          "min": 0.3,
+          "max": 1.6,
+          "default": 0.8,
+          "unit": "%"
+        }
+      },
+      "tracks": [
+        {
+          "prop": "x",
+          "keys": [
+            [
+              0,
+              "$amp"
+            ],
+            [
+              0.25,
+              "-$amp"
+            ],
+            [
+              0.5,
+              0.4
+            ],
+            [
+              0.75,
+              -0.15
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "linear"
+        },
+        {
+          "prop": "y",
+          "keys": [
+            [
+              0,
+              "-$amp"
+            ],
+            [
+              0.25,
+              0.5
+            ],
+            [
+              0.5,
+              -0.3
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "ease": "linear"
+        }
+      ],
+      "audio": {
+        "anchor": "hit"
+      },
+      "ai_tell": "low"
+    }
+  ]
+}

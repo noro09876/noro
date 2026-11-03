@@ -1,0 +1,2639 @@
+{
+ "style": "punch_poster",
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "durationInFrames": 510,
+ "audio": "music.wav",
+ "palette": {
+  "base": "#0E0E0E",
+  "ink": "#FFFFFF",
+  "accent": "#FF5A1F",
+  "accent_ink": "#0E0E0E",
+  "plate": "#FFFFFF",
+  "plate_ink": "#0E0E0E",
+  "shadow": "#FF5A1F",
+  "flash": "#FFFFFF"
+ },
+ "finish": {
+  "grain": 0.09,
+  "vignette": 0.12,
+  "dim_footage": 0.62,
+  "footage_blur": 2
+ },
+ "textShadow": {
+  "blur": 24,
+  "opacity": 0.55
+ },
+ "clips": [
+  {
+   "id": "c1",
+   "src": "broll/home.png",
+   "scroll": [
+    40,
+    360
+   ],
+   "from": 0,
+   "to": 76,
+   "fx": [
+    {
+     "technique": "whip_pan",
+     "start": 68,
+     "dur": 8,
+     "tracks": [
+      {
+       "prop": "x",
+       "keys": [
+        [
+         0,
+         0
+        ],
+        [
+         0.5,
+         -38.1402
+        ]
+       ],
+       "ease": [
+        0.5,
+        0,
+        0.75,
+        0
+       ]
+      },
+      {
+       "prop": "blur",
+       "keys": [
+        [
+         0,
+         0
+        ],
+        [
+         0.5,
+         48.5319
+        ]
+       ],
+       "ease": [
+        0.5,
+        0,
+        0.75,
+        0
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "drift",
+     "start": 0,
+     "dur": 76,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1.01
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c2",
+   "src": "broll/lead-engine.png",
+   "scroll": [
+    0,
+    420
+   ],
+   "from": 68,
+   "to": 151,
+   "fx": [
+    {
+     "technique": "whip_pan",
+     "start": 68,
+     "dur": 8,
+     "tracks": [
+      {
+       "prop": "opacity",
+       "keys": [
+        [
+         0,
+         0
+        ],
+        [
+         0.5,
+         1
+        ]
+       ],
+       "ease": "hold"
+      },
+      {
+       "prop": "x",
+       "keys": [
+        [
+         0.5,
+         38.1402
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      },
+      {
+       "prop": "blur",
+       "keys": [
+        [
+         0.5,
+         48.5319
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "zoom_punch_cut",
+     "start": 144,
+     "dur": 7,
+     "tracks": []
+    },
+    {
+     "technique": "drift",
+     "start": 68,
+     "dur": 83,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1.01
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c3",
+   "src": "broll/lead-engine.png",
+   "scroll": [
+    2350,
+    2900
+   ],
+   "from": 144,
+   "to": 217,
+   "fx": [
+    {
+     "technique": "zoom_punch_cut",
+     "start": 144,
+     "dur": 7,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.3239
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.16,
+        1,
+        0.3,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "hard_cut",
+     "start": 216,
+     "dur": 1,
+     "tracks": []
+    },
+    {
+     "technique": "drift",
+     "start": 144,
+     "dur": 73,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1.0108
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 162,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0627
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 198,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0301
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c4",
+   "src": "broll/catalog.png",
+   "scroll": [
+    0,
+    520
+   ],
+   "from": 216,
+   "to": 289,
+   "fx": [
+    {
+     "technique": "hard_cut",
+     "start": 216,
+     "dur": 1,
+     "tracks": []
+    },
+    {
+     "technique": "hard_cut",
+     "start": 288,
+     "dur": 1,
+     "tracks": []
+    },
+    {
+     "technique": "drift",
+     "start": 216,
+     "dur": 73,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1.01
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 270,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0789
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c5",
+   "src": "broll/bi.png",
+   "scroll": [
+    120,
+    1150
+   ],
+   "from": 288,
+   "to": 439,
+   "fx": [
+    {
+     "technique": "hard_cut",
+     "start": 288,
+     "dur": 1,
+     "tracks": []
+    },
+    {
+     "technique": "zoom_punch_cut",
+     "start": 432,
+     "dur": 7,
+     "tracks": []
+    },
+    {
+     "technique": "drift",
+     "start": 288,
+     "dur": 151,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1.01
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 306,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0857
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 342,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0309
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 360,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0322
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 378,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.094
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "micro_shake",
+     "start": 342,
+     "dur": 5,
+     "tracks": [
+      {
+       "prop": "x",
+       "keys": [
+        [
+         0,
+         0.9163
+        ],
+        [
+         0.25,
+         -0.9163
+        ],
+        [
+         0.5,
+         0.4
+        ],
+        [
+         0.75,
+         -0.15
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      },
+      {
+       "prop": "y",
+       "keys": [
+        [
+         0,
+         -0.9163
+        ],
+        [
+         0.25,
+         0.5
+        ],
+        [
+         0.5,
+         -0.3
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "micro_shake",
+     "start": 432,
+     "dur": 5,
+     "tracks": [
+      {
+       "prop": "x",
+       "keys": [
+        [
+         0,
+         0.8905
+        ],
+        [
+         0.25,
+         -0.8905
+        ],
+        [
+         0.5,
+         0.4
+        ],
+        [
+         0.75,
+         -0.15
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      },
+      {
+       "prop": "y",
+       "keys": [
+        [
+         0,
+         -0.8905
+        ],
+        [
+         0.25,
+         0.5
+        ],
+        [
+         0.5,
+         -0.3
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c6",
+   "src": "broll/home.png",
+   "scroll": [
+    0,
+    90
+   ],
+   "from": 432,
+   "to": 510,
+   "fx": [
+    {
+     "technique": "zoom_punch_cut",
+     "start": 432,
+     "dur": 7,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.2199
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.16,
+        1,
+        0.3,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "drift",
+     "start": 432,
+     "dur": 78,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1.06
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 450,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.02
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "punch_in",
+     "start": 486,
+     "dur": 10,
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.1062
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.33,
+        1,
+        0.68,
+        1
+       ]
+      }
+     ]
+    },
+    {
+     "technique": "micro_shake",
+     "start": 486,
+     "dur": 5,
+     "tracks": [
+      {
+       "prop": "x",
+       "keys": [
+        [
+         0,
+         0.9256
+        ],
+        [
+         0.25,
+         -0.9256
+        ],
+        [
+         0.5,
+         0.4
+        ],
+        [
+         0.75,
+         -0.15
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      },
+      {
+       "prop": "y",
+       "keys": [
+        [
+         0,
+         -0.9256
+        ],
+        [
+         0.25,
+         0.5
+        ],
+        [
+         0.5,
+         -0.3
+        ],
+        [
+         1,
+         0
+        ]
+       ],
+       "ease": [
+        0,
+        0,
+        1,
+        1
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "texts": [
+  {
+   "id": "p1",
+   "role": "hook",
+   "from": 8,
+   "to": 68,
+   "lines": 3,
+   "words": [
+    {
+     "text": "ЗАЯВКИ",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "ЛЕЖАТ",
+     "line": 1,
+     "word": 1,
+     "at": 18
+    },
+    {
+     "text": "В",
+     "line": 2,
+     "word": 2,
+     "at": 27
+    },
+    {
+     "text": "ТАБЛИЦЕ",
+     "line": 2,
+     "word": 3,
+     "at": 36
+    }
+   ],
+   "box": {
+    "x": 0.4661,
+    "y": 0.407,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": 0.64,
+   "enter": {
+    "technique": "slam_word",
+    "dur": 7,
+    "hit": 0.4,
+    "params": {
+     "from_scale": 1.4056,
+     "settle": 0.986
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.4056
+       ],
+       [
+        0.4,
+        0.986
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.2,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     },
+     {
+      "prop": "blur",
+      "keys": [
+       [
+        0,
+        14
+       ],
+       [
+        0.4,
+        0
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     }
+    ],
+    "unit": "word",
+    "stagger": {
+     "frames": "beat_subdivision",
+     "order": "forward"
+    }
+   },
+   "exit": {
+    "technique": "cut_off",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null,
+    "start": 67
+   },
+   "plate": {
+    "technique": "plate_hard_shadow",
+    "dur": 5,
+    "hit": 0.4,
+    "params": {
+     "shadow": 0.1222,
+     "pad_x": 0.3226
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.12
+       ],
+       [
+        0.4,
+        0.99
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.15,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     }
+    ],
+    "draw": "plate",
+    "text_delay": 0,
+    "unit": "block",
+    "stagger": null,
+    "start": 9
+   },
+   "emphasis": [],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 800,
+    "size": 0.047,
+    "case": "upper",
+    "tracking": -0.02,
+    "leading": 1.0,
+    "max_chars_per_line": 10,
+    "align": "center",
+    "color": "#0E0E0E",
+    "size_px": 90.2
+   }
+  },
+  {
+   "id": "p2",
+   "role": "body",
+   "from": 70,
+   "to": 144,
+   "lines": 3,
+   "words": [
+    {
+     "text": "64",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "ЛИДА",
+     "line": 0,
+     "word": 1,
+     "at": 18
+    },
+    {
+     "text": "И",
+     "line": 1,
+     "word": 2,
+     "at": 27
+    },
+    {
+     "text": "4",
+     "line": 1,
+     "word": 3,
+     "at": 36
+    },
+    {
+     "text": "ГРУППЫ",
+     "line": 1,
+     "word": 4,
+     "at": 45
+    },
+    {
+     "text": "ДУБЛЕЙ",
+     "line": 2,
+     "word": 5,
+     "at": 54
+    }
+   ],
+   "box": {
+    "x": 0.4695,
+    "y": 0.5533,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": -0.53,
+   "enter": {
+    "technique": "slam_word",
+    "dur": 7,
+    "hit": 0.4,
+    "params": {
+     "from_scale": 1.4777,
+     "settle": 0.9795
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.4777
+       ],
+       [
+        0.4,
+        0.9795
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.2,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     },
+     {
+      "prop": "blur",
+      "keys": [
+       [
+        0,
+        14
+       ],
+       [
+        0.4,
+        0
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     }
+    ],
+    "unit": "word",
+    "stagger": {
+     "frames": "beat_subdivision",
+     "order": "forward"
+    }
+   },
+   "exit": {
+    "technique": "cut_off",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null,
+    "start": 143
+   },
+   "plate": null,
+   "emphasis": [
+    {
+     "technique": "counter_roll",
+     "dur": 16,
+     "hit": 1,
+     "params": {
+      "from": 0
+     },
+     "tracks": [
+      {
+       "prop": "count",
+       "keys": [
+        [
+         0,
+         0
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.16,
+        1,
+        0.3,
+        1
+       ]
+      }
+     ],
+     "draw": "count",
+     "unit": "word",
+     "stagger": null,
+     "start": 74,
+     "word": 0,
+     "value": 64,
+     "decimals": 0
+    },
+    {
+     "technique": "color_flip",
+     "dur": 6,
+     "hit": 0.0,
+     "params": {
+      "pop": 1.1
+     },
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      },
+      {
+       "prop": "accent",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": "hold"
+      }
+     ],
+     "draw": "recolor",
+     "unit": "word",
+     "stagger": null,
+     "start": 127,
+     "word": 5
+    }
+   ],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 760,
+    "size": 0.044,
+    "case": "upper",
+    "tracking": -0.015,
+    "leading": 1.04,
+    "max_chars_per_line": 12,
+    "align": "center",
+    "color": "#FFFFFF",
+    "size_px": 84.5
+   }
+  },
+  {
+   "id": "p3",
+   "role": "body",
+   "from": 145,
+   "to": 216,
+   "lines": 4,
+   "words": [
+    {
+     "text": "СКОРИНГ",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "A/B/C",
+     "line": 1,
+     "word": 1,
+     "at": 18
+    },
+    {
+     "text": "ЗА",
+     "line": 2,
+     "word": 2,
+     "at": 36
+    },
+    {
+     "text": "ПАРУ",
+     "line": 2,
+     "word": 3,
+     "at": 45
+    },
+    {
+     "text": "СЕКУНД",
+     "line": 3,
+     "word": 4,
+     "at": 54
+    }
+   ],
+   "box": {
+    "x": 0.4726,
+    "y": 0.4049,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": 0.4,
+   "enter": {
+    "technique": "slam_word",
+    "dur": 7,
+    "hit": 0.4,
+    "params": {
+     "from_scale": 1.3765,
+     "settle": 0.94
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.3765
+       ],
+       [
+        0.4,
+        0.94
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.2,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     },
+     {
+      "prop": "blur",
+      "keys": [
+       [
+        0,
+        14
+       ],
+       [
+        0.4,
+        0
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     }
+    ],
+    "unit": "word",
+    "stagger": {
+     "frames": "beat_subdivision",
+     "order": "forward"
+    }
+   },
+   "exit": {
+    "technique": "cut_off",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null,
+    "start": 215
+   },
+   "plate": null,
+   "emphasis": [
+    {
+     "technique": "color_flip",
+     "dur": 6,
+     "hit": 0.0,
+     "params": {
+      "pop": 1.0883
+     },
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0883
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      },
+      {
+       "prop": "accent",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": "hold"
+      }
+     ],
+     "draw": "recolor",
+     "unit": "word",
+     "stagger": null,
+     "start": 180,
+     "word": 1
+    }
+   ],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 760,
+    "size": 0.044,
+    "case": "upper",
+    "tracking": -0.015,
+    "leading": 1.04,
+    "max_chars_per_line": 12,
+    "align": "center",
+    "color": "#FFFFFF",
+    "size_px": 84.5
+   }
+  },
+  {
+   "id": "p4",
+   "role": "body",
+   "from": 223,
+   "to": 288,
+   "lines": 3,
+   "words": [
+    {
+     "text": "КАТАЛОГ:",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "240",
+     "line": 0,
+     "word": 1,
+     "at": 0
+    },
+    {
+     "text": "ТОВАРОВ,",
+     "line": 1,
+     "word": 2,
+     "at": 0
+    },
+    {
+     "text": "9",
+     "line": 2,
+     "word": 3,
+     "at": 0
+    },
+    {
+     "text": "ОШИБОК",
+     "line": 2,
+     "word": 4,
+     "at": 0
+    }
+   ],
+   "box": {
+    "x": 0.4576,
+    "y": 0.5462,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": 0.09,
+   "enter": {
+    "technique": "hard_on",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null
+   },
+   "exit": {
+    "technique": "cut_off",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null,
+    "start": 287
+   },
+   "plate": null,
+   "emphasis": [
+    {
+     "technique": "counter_roll",
+     "dur": 16,
+     "hit": 1,
+     "params": {
+      "from": 0
+     },
+     "tracks": [
+      {
+       "prop": "count",
+       "keys": [
+        [
+         0,
+         0
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.16,
+        1,
+        0.3,
+        1
+       ]
+      }
+     ],
+     "draw": "count",
+     "unit": "word",
+     "stagger": null,
+     "start": 223,
+     "word": 1,
+     "value": 240,
+     "decimals": 0
+    },
+    {
+     "technique": "color_flip",
+     "dur": 6,
+     "hit": 0.0,
+     "params": {
+      "pop": 1.0186
+     },
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.0186
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      },
+      {
+       "prop": "accent",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": "hold"
+      }
+     ],
+     "draw": "recolor",
+     "unit": "word",
+     "stagger": null,
+     "start": 234,
+     "word": 4
+    }
+   ],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 760,
+    "size": 0.044,
+    "case": "upper",
+    "tracking": -0.015,
+    "leading": 1.04,
+    "max_chars_per_line": 12,
+    "align": "center",
+    "color": "#FFFFFF",
+    "size_px": 84.5
+   }
+  },
+  {
+   "id": "p5",
+   "role": "body",
+   "from": 296,
+   "to": 378,
+   "lines": 3,
+   "words": [
+    {
+     "text": "ВЫРУЧКА",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "ЗА",
+     "line": 1,
+     "word": 1,
+     "at": 18
+    },
+    {
+     "text": "90",
+     "line": 1,
+     "word": 2,
+     "at": 27
+    },
+    {
+     "text": "ДНЕЙ",
+     "line": 1,
+     "word": 3,
+     "at": 36
+    },
+    {
+     "text": "—",
+     "line": 1,
+     "word": 4,
+     "at": 45
+    },
+    {
+     "text": "12,8",
+     "line": 2,
+     "word": 5,
+     "at": 54
+    },
+    {
+     "text": "МЛН",
+     "line": 2,
+     "word": 6,
+     "at": 63
+    },
+    {
+     "text": "₽",
+     "line": 2,
+     "word": 7,
+     "at": 72
+    }
+   ],
+   "box": {
+    "x": 0.4714,
+    "y": 0.3991,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": -0.25,
+   "enter": {
+    "technique": "slam_word",
+    "dur": 7,
+    "hit": 0.4,
+    "params": {
+     "from_scale": 1.4122,
+     "settle": 1.0
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.4122
+       ],
+       [
+        0.4,
+        1.0
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.2,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     },
+     {
+      "prop": "blur",
+      "keys": [
+       [
+        0,
+        14
+       ],
+       [
+        0.4,
+        0
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     }
+    ],
+    "unit": "word",
+    "stagger": {
+     "frames": "beat_subdivision",
+     "order": "forward"
+    }
+   },
+   "exit": {
+    "technique": "cut_off",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null,
+    "start": 377
+   },
+   "plate": null,
+   "emphasis": [],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 760,
+    "size": 0.044,
+    "case": "upper",
+    "tracking": -0.015,
+    "leading": 1.04,
+    "max_chars_per_line": 12,
+    "align": "center",
+    "color": "#FFFFFF",
+    "size_px": 84.5
+   }
+  },
+  {
+   "id": "p6",
+   "role": "body",
+   "from": 378,
+   "to": 432,
+   "lines": 2,
+   "words": [
+    {
+     "text": "БЕЗ",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "АНАЛИТИКА",
+     "line": 1,
+     "word": 1,
+     "at": 0
+    }
+   ],
+   "box": {
+    "x": 0.4636,
+    "y": 0.2431,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": 0.07,
+   "enter": {
+    "technique": "hard_on",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null
+   },
+   "exit": {
+    "technique": "cut_off",
+    "dur": 1,
+    "hit": 0,
+    "params": {},
+    "tracks": [
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ]
+      ],
+      "ease": "hold"
+     }
+    ],
+    "unit": "block",
+    "stagger": null,
+    "start": 431
+   },
+   "plate": null,
+   "emphasis": [
+    {
+     "technique": "color_flip",
+     "dur": 6,
+     "hit": 0.0,
+     "params": {
+      "pop": 1.1101
+     },
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.1101
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      },
+      {
+       "prop": "accent",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": "hold"
+      }
+     ],
+     "draw": "recolor",
+     "unit": "word",
+     "stagger": null,
+     "start": 378,
+     "word": 1
+    }
+   ],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 760,
+    "size": 0.044,
+    "case": "upper",
+    "tracking": -0.015,
+    "leading": 1.04,
+    "max_chars_per_line": 12,
+    "align": "center",
+    "color": "#FFFFFF",
+    "size_px": 84.5
+   }
+  },
+  {
+   "id": "p7",
+   "role": "end",
+   "from": 430,
+   "to": 510,
+   "lines": 3,
+   "words": [
+    {
+     "text": "NORO",
+     "line": 0,
+     "word": 0,
+     "at": 0
+    },
+    {
+     "text": "БЕЗ",
+     "line": 1,
+     "word": 1,
+     "at": 0
+    },
+    {
+     "text": "РЕГИСТРАЦИИ",
+     "line": 2,
+     "word": 2,
+     "at": 0
+    }
+   ],
+   "box": {
+    "x": 0.4658,
+    "y": 0.4052,
+    "w": 0.82,
+    "align": "center"
+   },
+   "rotate": -0.54,
+   "enter": {
+    "technique": "stamp",
+    "dur": 6,
+    "hit": 0.5,
+    "params": {
+     "angle": -3.163
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.25
+       ],
+       [
+        0.5,
+        0.98
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "rotate",
+      "keys": [
+       [
+        0,
+        -9
+       ],
+       [
+        1,
+        -3.163
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.2,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     }
+    ],
+    "unit": "block",
+    "stagger": null
+   },
+   "exit": null,
+   "plate": {
+    "technique": "plate_hard_shadow",
+    "dur": 5,
+    "hit": 0.4,
+    "params": {
+     "shadow": 0.1231,
+     "pad_x": 0.3383
+    },
+    "tracks": [
+     {
+      "prop": "scale",
+      "keys": [
+       [
+        0,
+        1.12
+       ],
+       [
+        0.4,
+        0.99
+       ],
+       [
+        1,
+        1
+       ]
+      ],
+      "ease": [
+       0.25,
+       1,
+       0.5,
+       1
+      ]
+     },
+     {
+      "prop": "opacity",
+      "keys": [
+       [
+        0,
+        0
+       ],
+       [
+        0.15,
+        1
+       ]
+      ],
+      "ease": [
+       0,
+       0,
+       1,
+       1
+      ]
+     }
+    ],
+    "draw": "plate",
+    "text_delay": 0,
+    "unit": "block",
+    "stagger": null,
+    "start": 431
+   },
+   "emphasis": [
+    {
+     "technique": "color_flip",
+     "dur": 6,
+     "hit": 0.0,
+     "params": {
+      "pop": 1.15
+     },
+     "tracks": [
+      {
+       "prop": "scale",
+       "keys": [
+        [
+         0,
+         1.15
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": [
+        0.25,
+        1,
+        0.5,
+        1
+       ]
+      },
+      {
+       "prop": "accent",
+       "keys": [
+        [
+         0,
+         1
+        ],
+        [
+         1,
+         1
+        ]
+       ],
+       "ease": "hold"
+      }
+     ],
+     "draw": "recolor",
+     "unit": "word",
+     "stagger": null,
+     "start": 450,
+     "word": 0
+    }
+   ],
+   "type": {
+    "family": "Unbounded Variable",
+    "weight": 900,
+    "size": 0.05,
+    "case": "upper",
+    "tracking": -0.03,
+    "leading": 0.98,
+    "max_chars_per_line": 11,
+    "align": "center",
+    "color": "#0E0E0E",
+    "size_px": 96.0
+   }
+  }
+ ],
+ "overlays": [
+  {
+   "technique": "flash_frame",
+   "start": 143,
+   "dur": 4,
+   "tracks": [
+    {
+     "prop": "opacity",
+     "keys": [
+      [
+       0,
+       0
+      ],
+      [
+       0.25,
+       0.8428
+      ],
+      [
+       1,
+       0
+      ]
+     ],
+     "ease": [
+      0.33,
+      1,
+      0.68,
+      1
+     ]
+    }
+   ],
+   "color": "#FFFFFF"
+  },
+  {
+   "technique": "flash_frame",
+   "start": 431,
+   "dur": 4,
+   "tracks": [
+    {
+     "prop": "opacity",
+     "keys": [
+      [
+       0,
+       0
+      ],
+      [
+       0.25,
+       0.8421
+      ],
+      [
+       1,
+       0
+      ]
+     ],
+     "ease": [
+      0.33,
+      1,
+      0.68,
+      1
+     ]
+    }
+   ],
+   "color": "#FFFFFF"
+  }
+ ],
+ "rhythm": {
+  "bpm": 100.11,
+  "beats": [
+   18,
+   36,
+   54,
+   72,
+   90,
+   108,
+   126,
+   144,
+   162,
+   180,
+   198,
+   216,
+   234,
+   252,
+   270,
+   288,
+   306,
+   324,
+   342,
+   360,
+   378,
+   396,
+   414,
+   432,
+   450,
+   468,
+   486,
+   503
+  ]
+ },
+ "log": [
+  {
+   "frame": 11,
+   "time": 0.367,
+   "what": "text p1 in",
+   "why": "kept on speech (no beat within window)"
+  },
+  {
+   "frame": 68,
+   "time": 2.267,
+   "what": "transition whip_pan into c2",
+   "why": "weighted pick"
+  },
+  {
+   "frame": 72,
+   "time": 2.4,
+   "what": "cut c2",
+   "why": "beat grid, -4 f from phrase start-lead"
+  },
+  {
+   "frame": 73,
+   "time": 2.433,
+   "what": "text p2 in",
+   "why": "snapped to beat 2.398s"
+  },
+  {
+   "frame": 74,
+   "time": 2.467,
+   "what": "counter_roll on '64'",
+   "why": "number mark"
+  },
+  {
+   "frame": 127,
+   "time": 4.233,
+   "what": "color_flip on 'ДУБЛЕЙ'",
+   "why": "keyword mark"
+  },
+  {
+   "frame": 143,
+   "time": 4.767,
+   "what": "flash_frame",
+   "why": "drop at 4.795 s"
+  },
+  {
+   "frame": 144,
+   "time": 4.8,
+   "what": "cut c3",
+   "why": "beat grid, -5 f from phrase start-lead"
+  },
+  {
+   "frame": 144,
+   "time": 4.8,
+   "what": "transition zoom_punch_cut into c3",
+   "why": "cut lands on the drop"
+  },
+  {
+   "frame": 148,
+   "time": 4.933,
+   "what": "text p3 in",
+   "why": "kept on speech (no beat within window)"
+  },
+  {
+   "frame": 162,
+   "time": 5.4,
+   "what": "punch_in on c3",
+   "why": "low onset, strength 0.8"
+  },
+  {
+   "frame": 180,
+   "time": 6.0,
+   "what": "color_flip on 'A/B/C'",
+   "why": "keyword mark"
+  },
+  {
+   "frame": 198,
+   "time": 6.6,
+   "what": "punch_in on c3",
+   "why": "low onset, strength 0.833"
+  },
+  {
+   "frame": 216,
+   "time": 7.2,
+   "what": "cut c4",
+   "why": "beat grid, -7 f from phrase start-lead"
+  },
+  {
+   "frame": 216,
+   "time": 7.2,
+   "what": "transition hard_cut into c4",
+   "why": "weighted pick, avoiding repeat of zoom_punch_cut"
+  },
+  {
+   "frame": 223,
+   "time": 7.433,
+   "what": "text p4 in",
+   "why": "kept on speech (no beat within window)"
+  },
+  {
+   "frame": 223,
+   "time": 7.433,
+   "what": "counter_roll on '240'",
+   "why": "number mark"
+  },
+  {
+   "frame": 234,
+   "time": 7.8,
+   "what": "skip punch_in",
+   "why": "humanize: skipped on purpose so the pulse is not mechanical"
+  },
+  {
+   "frame": 234,
+   "time": 7.8,
+   "what": "color_flip on 'ОШИБОК'",
+   "why": "keyword mark"
+  },
+  {
+   "frame": 270,
+   "time": 9.0,
+   "what": "punch_in on c4",
+   "why": "low onset, strength 0.846"
+  },
+  {
+   "frame": 288,
+   "time": 9.6,
+   "what": "cut c5",
+   "why": "beat grid, -10 f from phrase start-lead"
+  },
+  {
+   "frame": 288,
+   "time": 9.6,
+   "what": "transition hard_cut into c5",
+   "why": "weighted pick, avoiding repeat of zoom_punch_cut"
+  },
+  {
+   "frame": 299,
+   "time": 9.967,
+   "what": "text p5 in",
+   "why": "kept on speech (no beat within window)"
+  },
+  {
+   "frame": 299,
+   "time": 9.967,
+   "what": "skip emphasis p5#5",
+   "why": "budget 5 per 10 s reached"
+  },
+  {
+   "frame": 306,
+   "time": 10.2,
+   "what": "punch_in on c5",
+   "why": "low onset, strength 0.835"
+  },
+  {
+   "frame": 342,
+   "time": 11.4,
+   "what": "punch_in on c5",
+   "why": "low onset, strength 0.851"
+  },
+  {
+   "frame": 342,
+   "time": 11.4,
+   "what": "micro_shake",
+   "why": "strong hit in the track"
+  },
+  {
+   "frame": 360,
+   "time": 12.0,
+   "what": "punch_in on c5",
+   "why": "low onset, strength 0.75"
+  },
+  {
+   "frame": 378,
+   "time": 12.6,
+   "what": "punch_in on c5",
+   "why": "low onset, strength 0.792"
+  },
+  {
+   "frame": 378,
+   "time": 12.6,
+   "what": "text p6 in",
+   "why": "snapped to beat 12.587s"
+  },
+  {
+   "frame": 378,
+   "time": 12.6,
+   "what": "color_flip on 'АНАЛИТИКА'",
+   "why": "keyword mark"
+  },
+  {
+   "frame": 431,
+   "time": 14.367,
+   "what": "flash_frame",
+   "why": "drop at 14.389 s"
+  },
+  {
+   "frame": 432,
+   "time": 14.4,
+   "what": "cut c6",
+   "why": "beat grid, -1 f from phrase start-lead"
+  },
+  {
+   "frame": 432,
+   "time": 14.4,
+   "what": "transition zoom_punch_cut into c6",
+   "why": "cut lands on the drop"
+  },
+  {
+   "frame": 432,
+   "time": 14.4,
+   "what": "micro_shake",
+   "why": "strong hit in the track"
+  },
+  {
+   "frame": 433,
+   "time": 14.433,
+   "what": "text p7 in",
+   "why": "snapped to beat 14.389s"
+  },
+  {
+   "frame": 450,
+   "time": 15.0,
+   "what": "punch_in on c6",
+   "why": "low onset, strength 0.813"
+  },
+  {
+   "frame": 450,
+   "time": 15.0,
+   "what": "color_flip on 'NORO'",
+   "why": "keyword mark"
+  },
+  {
+   "frame": 486,
+   "time": 16.2,
+   "what": "punch_in on c6",
+   "why": "low onset, strength 0.864"
+  },
+  {
+   "frame": 486,
+   "time": 16.2,
+   "what": "micro_shake",
+   "why": "strong hit in the track"
+  }
+ ]
+}

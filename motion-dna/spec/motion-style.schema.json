@@ -1,0 +1,550 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://noro.studio/motion-dna/motion-style.schema.json",
+  "title": "Motion Style (Motion DNA)",
+  "description": "Машиночитаемое описание моушн-стиля рилса. Стиль не содержит контента: он говорит, ЧТО анимировать, КАК (приём из библиотеки + параметры), КОГДА (привязка к речи/биту/онсету/структуре трека) и ЧЕГО НЕ ДЕЛАТЬ. Компилятор применяет стиль к таймлайну ролика и выдаёт план анимации.",
+  "type": "object",
+  "required": [
+    "id",
+    "palette",
+    "typography",
+    "layout",
+    "rhythm",
+    "text",
+    "transitions",
+    "humanize"
+  ],
+  "$defs": {
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    },
+    "frames_range": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "pick": {
+      "description": "Выбор приёма из библиотеки с весом и параметрами. Параметры вне диапазона библиотеки — ошибка компиляции.",
+      "type": "object",
+      "required": [
+        "technique"
+      ],
+      "properties": {
+        "technique": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "default": 1
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "unit": {
+          "enum": [
+            "char",
+            "word",
+            "line",
+            "block"
+          ],
+          "description": "Переопределить единицу анимации приёма"
+        }
+      }
+    },
+    "picks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pick"
+      },
+      "minItems": 1
+    },
+    "type_role": {
+      "type": "object",
+      "required": [
+        "family",
+        "weight",
+        "size"
+      ],
+      "properties": {
+        "family": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 900
+        },
+        "size": {
+          "type": "number",
+          "description": "Кегль как доля высоты кадра (0.05 = 96 px при 1920)"
+        },
+        "case": {
+          "enum": [
+            "as_is",
+            "lower",
+            "upper",
+            "sentence"
+          ]
+        },
+        "tracking": {
+          "type": "number",
+          "description": "em"
+        },
+        "leading": {
+          "type": "number"
+        },
+        "max_chars_per_line": {
+          "type": "integer"
+        },
+        "align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "color": {
+          "enum": [
+            "ink",
+            "accent",
+            "plate_ink"
+          ]
+        }
+      }
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object",
+      "description": "Откуда стиль: ссылка на референс, кто/что разбирал, уверенность по каждому разделу (0..1). Раздел с низкой уверенностью помечается для ручной проверки.",
+      "properties": {
+        "reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "analyzed": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "canvas": {
+      "type": "object",
+      "properties": {
+        "safe": {
+          "type": "object",
+          "description": "Безопасные поля (доли кадра) — зоны интерфейса Instagram/TikTok, куда не ставится текст.",
+          "properties": {
+            "top": {
+              "type": "number"
+            },
+            "bottom": {
+              "type": "number"
+            },
+            "left": {
+              "type": "number"
+            },
+            "right": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "palette": {
+      "type": "object",
+      "required": [
+        "ink",
+        "accent"
+      ],
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/color"
+        },
+        "ink": {
+          "$ref": "#/$defs/color"
+        },
+        "accent": {
+          "$ref": "#/$defs/color"
+        },
+        "accent_ink": {
+          "$ref": "#/$defs/color"
+        },
+        "plate": {
+          "$ref": "#/$defs/color"
+        },
+        "plate_ink": {
+          "$ref": "#/$defs/color"
+        },
+        "shadow": {
+          "$ref": "#/$defs/color"
+        },
+        "flash": {
+          "$ref": "#/$defs/color"
+        }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "required": [
+        "roles"
+      ],
+      "properties": {
+        "roles": {
+          "type": "object",
+          "description": "Роли текста из таймлайна: hook, body, end и т. п.",
+          "additionalProperties": {
+            "$ref": "#/$defs/type_role"
+          }
+        },
+        "shadow": {
+          "type": "object",
+          "properties": {
+            "blur": {
+              "type": "number"
+            },
+            "opacity": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "required": [
+        "positions"
+      ],
+      "properties": {
+        "positions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "x",
+              "y"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "x": {
+                "type": "number",
+                "description": "Левый край блока (или центр при align=center), доля ширины"
+              },
+              "y": {
+                "type": "number",
+                "description": "Верх блока, доля высоты"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "weight": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "no_repeat_position": {
+          "type": "boolean"
+        },
+        "box_width": {
+          "type": "number",
+          "description": "Максимальная ширина текстового блока, доля ширины"
+        }
+      }
+    },
+    "rhythm": {
+      "type": "object",
+      "required": [
+        "cut_on"
+      ],
+      "properties": {
+        "cut_on": {
+          "enum": [
+            "downbeat",
+            "beat",
+            "half_beat",
+            "phrase"
+          ],
+          "description": "Куда ставятся склейки"
+        },
+        "cut_lead_frames": {
+          "type": "integer",
+          "description": "Склейка раньше начала фразы на N кадров (текст входит после картинки)"
+        },
+        "min_shot_sec": {
+          "type": "number"
+        },
+        "text_snap": {
+          "type": "object",
+          "description": "Подтягивать вход текста к биту, если начало слова ближе window_ms. Дальше — оставить по речи.",
+          "properties": {
+            "to": {
+              "enum": [
+                "beat",
+                "half_beat",
+                "none"
+              ]
+            },
+            "window_ms": {
+              "type": "number"
+            }
+          }
+        },
+        "word_stagger": {
+          "enum": [
+            "speech",
+            "beat_subdivision",
+            "fixed"
+          ],
+          "description": "Слова внутри фразы: по таймингам речи, по сетке бита или с постоянным шагом"
+        },
+        "subdivision": {
+          "type": "integer",
+          "description": "Для beat_subdivision: 2 — восьмые, 4 — шестнадцатые"
+        },
+        "hold_after_last_word_frames": {
+          "type": "integer"
+        },
+        "exit_on": {
+          "enum": [
+            "next_phrase",
+            "next_cut",
+            "beat_before_next"
+          ]
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "required": [
+        "enter"
+      ],
+      "properties": {
+        "enter": {
+          "$ref": "#/$defs/picks"
+        },
+        "exit": {
+          "$ref": "#/$defs/picks"
+        },
+        "by_role": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "enter": {
+                "$ref": "#/$defs/picks"
+              },
+              "exit": {
+                "$ref": "#/$defs/picks"
+              },
+              "plate": {
+                "$ref": "#/$defs/picks"
+              }
+            }
+          }
+        },
+        "plate": {
+          "$ref": "#/$defs/picks",
+          "description": "Плашка под текстом. Отсутствует — без плашек."
+        },
+        "plate_roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "emphasis": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "$ref": "#/$defs/picks"
+        },
+        "number": {
+          "$ref": "#/$defs/picks"
+        },
+        "budget_per_10s": {
+          "type": "number",
+          "description": "Не больше N акцентов на 10 секунд — остальные ключевые слова без выделения"
+        },
+        "delay_frames": {
+          "$ref": "#/$defs/frames_range"
+        }
+      }
+    },
+    "transitions": {
+      "type": "object",
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "default": {
+          "$ref": "#/$defs/picks"
+        },
+        "on_drop": {
+          "$ref": "#/$defs/picks"
+        },
+        "on_section": {
+          "$ref": "#/$defs/picks"
+        },
+        "no_repeat": {
+          "type": "boolean",
+          "description": "Два одинаковых «эффектных» перехода подряд запрещены (прямая склейка — можно)"
+        }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/pick"
+        },
+        "on_onset_low": {
+          "type": "object",
+          "properties": {
+            "pick": {
+              "$ref": "#/$defs/pick"
+            },
+            "min_strength": {
+              "type": "number"
+            },
+            "max_per_bar": {
+              "type": "integer"
+            },
+            "after_drop_only": {
+              "type": "boolean"
+            },
+            "skip_probability": {
+              "type": "number"
+            }
+          }
+        },
+        "on_hit": {
+          "$ref": "#/$defs/pick"
+        }
+      }
+    },
+    "overlays": {
+      "type": "object",
+      "properties": {
+        "on_drop": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/pick"
+            }
+          ],
+          "properties": {
+            "color": {
+              "enum": [
+                "flash",
+                "accent",
+                "ink"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "finish": {
+      "type": "object",
+      "description": "Финишная обработка всего кадра — то, что снимает «стерильность» рендера.",
+      "properties": {
+        "grain": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.3
+        },
+        "vignette": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.6
+        },
+        "dim_footage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.8,
+          "description": "Затемнение футажа под текстом"
+        },
+        "footage_blur": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20,
+          "description": "Размытие футажа под текстом, px при 1080"
+        }
+      }
+    },
+    "humanize": {
+      "type": "object",
+      "required": [
+        "seed"
+      ],
+      "description": "Анти-шаблонные правила. Детерминированы seed: один и тот же вход даёт один и тот же ролик.",
+      "properties": {
+        "seed": {
+          "type": "integer"
+        },
+        "timing_jitter_frames": {
+          "$ref": "#/$defs/frames_range"
+        },
+        "param_jitter": {
+          "type": "number",
+          "description": "Относительный разброс параметров приёма (0.1 = ±10%), в пределах диапазона библиотеки"
+        },
+        "rotation_jitter_deg": {
+          "type": "number"
+        },
+        "position_jitter": {
+          "type": "number",
+          "description": "Смещение позиции блока, доля кадра"
+        },
+        "max_same_enter_streak": {
+          "type": "integer"
+        }
+      }
+    },
+    "bans": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Запрещённые приёмы (id). Приёмы с ai_tell=high запрещены, если явно не разрешены в allow_high_tell."
+    },
+    "allow_high_tell": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "$schema": "../spec/motion-style.schema.json",
+  "id": "editorial_mask",
+  "name": "Редакционный: маски, маркер, прямые склейки",
+  "source": {
+    "reference": null,
+    "analyzed": "Авторский стиль NORO (демо). Не разбор чужого ролика.",
+    "confidence": {
+      "typography": 1,
+      "text_animation": 1,
+      "transitions": 1,
+      "rhythm": 1
+    },
+    "notes": "Спокойный журнальный моушн: текст живёт по речи, склейки на сильную долю, акцент — маркером, камера почти не двигается до дропа."
+  },
+  "canvas": {
+    "safe": {
+      "top": 0.11,
+      "bottom": 0.2,
+      "left": 0.065,
+      "right": 0.14
+    }
+  },
+  "palette": {
+    "base": "#0D0D0C",
+    "ink": "#F3F0E8",
+    "accent": "#C9F04B",
+    "accent_ink": "#111110",
+    "plate": "#F3F0E8",
+    "plate_ink": "#111110",
+    "shadow": "#000000",
+    "flash": "#F3F0E8"
+  },
+  "typography": {
+    "roles": {
+      "hook": {
+        "family": "Onest Variable",
+        "weight": 680,
+        "size": 0.056,
+        "case": "sentence",
+        "tracking": -0.035,
+        "leading": 1.02,
+        "max_chars_per_line": 14,
+        "align": "left",
+        "color": "ink"
+      },
+      "body": {
+        "family": "Onest Variable",
+        "weight": 620,
+        "size": 0.047,
+        "case": "sentence",
+        "tracking": -0.03,
+        "leading": 1.04,
+        "max_chars_per_line": 16,
+        "align": "left",
+        "color": "ink"
+      },
+      "end": {
+        "family": "Onest Variable",
+        "weight": 760,
+        "size": 0.07,
+        "case": "as_is",
+        "tracking": -0.045,
+        "leading": 0.98,
+        "max_chars_per_line": 12,
+        "align": "left",
+        "color": "ink"
+      }
+    },
+    "shadow": {
+      "blur": 30,
+      "opacity": 0.35
+    }
+  },
+  "layout": {
+    "positions": [
+      {
+        "id": "low_left",
+        "x": 0.075,
+        "y": 0.58,
+        "roles": [
+          "hook",
+          "body"
+        ],
+        "weight": 3
+      },
+      {
+        "id": "mid_left",
+        "x": 0.075,
+        "y": 0.4,
+        "roles": [
+          "hook",
+          "body"
+        ],
+        "weight": 2
+      },
+      {
+        "id": "top_left",
+        "x": 0.075,
+        "y": 0.15,
+        "roles": [
+          "body"
+        ],
+        "weight": 1
+      },
+      {
+        "id": "end_left",
+        "x": 0.075,
+        "y": 0.44,
+        "roles": [
+          "end"
+        ],
+        "weight": 1
+      }
+    ],
+    "no_repeat_position": true,
+    "box_width": 0.8
+  },
+  "rhythm": {
+    "cut_on": "downbeat",
+    "cut_lead_frames": 4,
+    "min_shot_sec": 1.6,
+    "text_snap": {
+      "to": "beat",
+      "window_ms": 90
+    },
+    "word_stagger": "speech",
+    "hold_after_last_word_frames": 10,
+    "exit_on": "next_phrase"
+  },
+  "text": {
+    "enter": [
+      {
+        "technique": "mask_rise_line",
+        "weight": 3,
+        "params": {
+          "rise": 1.0
+        }
+      },
+      {
+        "technique": "skew_slide_word",
+        "weight": 1,
+        "params": {
+          "dist": 0.35,
+          "skew": 8
+        }
+      }
+    ],
+    "exit": [
+      {
+        "technique": "mask_drop_line",
+        "weight": 1
+      }
+    ],
+    "by_role": {
+      "end": {
+        "enter": [
+          {
+            "technique": "tracking_collapse",
+            "params": {
+              "from": 0.22
+            }
+          }
+        ]
+      }
+    }
+  },
+  "emphasis": {
+    "keyword": [
+      {
+        "technique": "marker_sweep",
+        "params": {
+          "height": 0.6,
+          "offset_y": 0.14,
+          "tilt": -1.2
+        }
+      }
+    ],
+    "number": [
+      {
+        "technique": "counter_roll"
+      }
+    ],
+    "budget_per_10s": 4,
+    "delay_frames": [
+      1,
+      3
+    ]
+  },
+  "transitions": {
+    "default": [
+      {
+        "technique": "hard_cut",
+        "weight": 5
+      },
+      {
+        "technique": "mask_wipe_y",
+        "weight": 2
+      }
+    ],
+    "on_drop": [
+      {
+        "technique": "zoom_punch_cut",
+        "params": {
+          "from": 1.12
+        }
+      }
+    ],
+    "on_section": [
+      {
+        "technique": "slide_push"
+      }
+    ],
+    "no_repeat": true
+  },
+  "camera": {
+    "base": {
+      "technique": "drift",
+      "params": {
+        "amount": 1.035
+      }
+    },
+    "on_onset_low": {
+      "pick": {
+        "technique": "punch_in",
+        "params": {
+          "amount": 1.025
+        }
+      },
+      "min_strength": 0.6,
+      "max_per_bar": 1,
+      "after_drop_only": true,
+      "skip_probability": 0.5
+    }
+  },
+  "finish": {
+    "grain": 0.06,
+    "vignette": 0.28,
+    "dim_footage": 0.64,
+    "footage_blur": 2.5
+  },
+  "humanize": {
+    "seed": 11,
+    "timing_jitter_frames": [
+      -1,
+      1
+    ],
+    "param_jitter": 0.08,
+    "rotation_jitter_deg": 0,
+    "position_jitter": 0.01,
+    "max_same_enter_streak": 3
+  },
+  "bans": [
+    "blur_resolve_line",
+    "char_cascade",
+    "slam_word",
+    "whip_pan",
+    "flash_frame",
+    "stamp"
+  ]
+}
