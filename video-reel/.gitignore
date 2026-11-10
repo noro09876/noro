@@ -13,3 +13,5 @@ models
 
 # the client's raw footage is personal data — keep it out of git, put it at source/client.mp4
 source/*.mp4
+
+__pycache__
