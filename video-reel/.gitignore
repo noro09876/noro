@@ -1,0 +1,15 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# renders, QA frames
+out
+
+# heavy / regenerable media (scripts/build.sh recreates them)
+public/client.mp4
+public/fg
+models
+
+# the client's raw footage is personal data — keep it out of git, put it at source/client.mp4
+source/*.mp4
